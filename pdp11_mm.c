@@ -3,34 +3,34 @@
 
 typedef unsigned char byte;
 typedef unsigned short int word;
-typedef word Adress;
+typedef word adr;
 
 #define MEMSIZE (64*1024)
 
 byte mem[MEMSIZE];
 
-void b_write(Adress adr, byte b) {
-    mem[adr] = b;
+void b_write(adr a, byte b) {
+    mem[a] = b;
 }
 
-byte b_read(Adress adr) {
-    return mem[adr];
+byte b_read(adr a) {
+    return mem[a];
 }
 
-word w_read(Adress adr) {
-    word w = ((word)mem[adr+1]) << 8;
-    w = w | mem[adr];
+word w_read(adr a) {
+    word w = ((word)mem[a + 1]) << 8;
+    w = w | mem[a];
     return w;
 }
 
-void w_write(Adress adr, word w) {
+void w_write(adr a, word w) {
     word w1 = w & 0xff;
     word w2 = w & 0xff00;
     w2 = w2 >> 8;
     byte b1 = (byte) w1;
     byte b2 = (byte) w2;
-    mem[adr] = b1;
-    mem[adr + 1]  = b2;
+    mem[a] = b1;
+    mem[a + 1]  = b2;
 }
 
 void test_mem() {
@@ -42,7 +42,7 @@ void test_mem() {
     assert(b0 == bres);
 
     //пишем 2 байта, читаем слово
-    Adress a = 5;
+    adr a = 5;
     byte b1 = 0x0a;
     byte b2 = 0x0b;
     word w = 0x0b0a;
