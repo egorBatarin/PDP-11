@@ -1,11 +1,6 @@
 #include <stdio.h>
 #include <assert.h>
-
-typedef unsigned char byte;
-typedef unsigned short int word;
-typedef word adr;
-
-#define MEMSIZE (64*1024)
+#include "foo.h"
 
 byte mem[MEMSIZE];
 
