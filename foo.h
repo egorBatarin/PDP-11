@@ -21,16 +21,16 @@ void do_halt();
 void do_add();
 void do_nothing();
 void run();
-
-extern const Command cmd[];
-void trace(const char *  format, ...);
-
 typedef struct {
 	word mask;
 	word opcode;
 	char * name;
 	void (*do_func)(void);
 } Command;
+extern const Command cmd[];
+void trace(const char *  format, ...);
+
+
 
 
 #endif FOO_H
