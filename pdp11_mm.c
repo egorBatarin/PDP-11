@@ -1,30 +1,32 @@
 #include <stdio.h>
-#include <assert.h>
-#include "foo.h"
+#include <assert.h> // средство для сохранения зрения и времени
+#include "foo.h" //создал свою библиотеку, чтоб не писать всякий тайпдефы и екстёрны каждый раз
 
-byte mem[MEMSIZE];
+byte mem[MEMSIZE]; //решил, что отдельными байтами проще
 
 void b_write(adr a, byte b) {
-    mem[a] = b;
+    mem[a] = b; // просто добавляем байт b в адрес с номером a
 }
 
 byte b_read(adr a) {
-    return mem[a];
+    return mem[a]; // а тут его просто читаем
 }
 
 word w_read(adr a) {
-    word w = ((word)mem[a + 1]) << 8;
-    w = w | mem[a];
+    word w = ((word)mem[a + 1]) << 8; // берем старший байт (у нас little endian)
+    // потом приводим к типу word (так как у нас был байт, а не слово)
+    // смещаем вперед на 8 бит, первые 8 бит заполняются нулями
+    w = w | mem[a]; // складываем (на первые 8 нулевых бит аккуратно наложится )
     return w;
 }
 
 void w_write(adr a, word w) {
-    word w1 = w & 0xff;
-    word w2 = w & 0xff00;
-    w2 = w2 >> 8;
-    byte b1 = (byte) w1;
+    word w1 = w & 0xff; //отрезаем 8 последних бит
+    word w2 = w & 0xff00; //отрезаем 8 первых бит
+    w2 = w2 >> 8; // смещаем в начало
+    byte b1 = (byte) w1; //приводим все слова к байтам
     byte b2 = (byte) w2;
-    mem[a] = b1;
+    mem[a] = b1; // тут дело техники...
     mem[a + 1]  = b2;
 }
 
@@ -52,7 +54,9 @@ void test_mem() {
     wres = w_read(a);
     assert(w == wres);
 }
+
+
 int main() {
-    test_mem();
+    test_mem(); // палочка-выручалочка
     return 0;
 }
