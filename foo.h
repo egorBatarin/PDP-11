@@ -20,7 +20,7 @@ void do_mov();
 void do_halt();
 void do_add();
 void do_nothing();
-
+void run();
 
 extern const Command cmd[];
 void trace(const char *  format, ...);
