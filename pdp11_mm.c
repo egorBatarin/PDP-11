@@ -33,12 +33,14 @@ void w_write(adr a, word w) {
 void test_mem() {
 
     //“ест 1: пишем байт и читаем его
+
     byte b0 = 0x0a;
     b_write(3, b0); //пишем в 3 адрес массива mem символ b0
     byte bres = b_read(3); //читаем то, что в 3 адресе (должен быть b0)
     assert(b0 == bres);
 
     //“ест 2: пишем 2 байта, читаем слово
+
     adr a = 5;
     byte b1 = 0x0a;
     byte b2 = 0x0b;
@@ -49,17 +51,56 @@ void test_mem() {
     assert(wres == w);
 
     //“ест 3: пишем слово, читаем слово
+
     w = 0xbbaa;
     w_write(a, w);
     wres = w_read(a);
     assert(w == wres);
+
+    //“ест 4: провер€ем работоспособность функции load_file дл€ 01_sum.pdp.txt
+/*
+    printf("%x\n", b_read(512)); //c0
+    printf("%x\n", b_read(513)); //15
+    printf("%x\n", b_read(514)); //2
+*/
+
+   //“ест 5: провер€ем работоспособность функции load_file дл€ 01_sum_mode1.pdp.txt
+/*
+    printf("%x\n", b_read(64)); //5
+    printf("%x\n", b_read(65)); //0
+    printf("%x\n", b_read(512)); //c0
+    printf("%x\n", b_read(513)); //15
+*/
+
+
+   //“ест 6: провер€ем работоспособность функции load_file дл€ 01_sum_neg.pdp.txt
+
+    printf("%x\n", b_read(512)); //c0
+    printf("%x\n", b_read(513)); //15
+    printf("%x\n", b_read(514)); //3
+
 }
 
 void load_file(const char * file_name) { //будем использовать только в этом файле в main
+    FILE * fin = fopen(file_name, "r"); //читаем из текстового файла
+	adr start; //адрес начального блока
+	unsigned int i;
+	unsigned int data; //считываемые два 16-ричных числа (+нули после 8 бита)
+	unsigned int n; // число байт
 
+	while(fscanf(fin,"%x%x",&start, &n) == 2) { // читаем из fin пока дают читать адрес и кол-во байт
+		for (i = 0; i < n; i++) { // каждый раз i = 0 чтобы начинать запись именно с adress
+	     fscanf (fin, "%x", &data); //читаем в шестнадцатиричном виде
+	     byte cdata = (byte) data; //обрезаем unsigned int, оставл€€ только первые 8 бит, кодирующие инфу о двух 16-ричных числах
+		 b_write (start + i, cdata); // записываем байт на i-ое место
+		}
+	}
+	fclose(fin);
 };
 
-int main() {
+
+int main(int argc, char * argv[]) {
+    load_file(argv[1]); // в качестве argv[1] будет выступать какой-нибудь текстовый тест .txt написанный первым через пробел
     test_mem(); // палочка-выручалочка
     return 0;
 }
