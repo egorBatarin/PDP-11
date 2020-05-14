@@ -74,10 +74,12 @@ void test_mem() {
 
 
    //Тест 6: проверяем работоспособность функции load_file для 01_sum_neg.pdp.txt
-
+/*
     printf("%x\n", b_read(512)); //c0
     printf("%x\n", b_read(513)); //15
     printf("%x\n", b_read(514)); //3
+*/
+
 
 }
 
