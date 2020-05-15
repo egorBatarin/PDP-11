@@ -46,7 +46,7 @@ extern const Command cmd[];
 void trace(const char *  format, ...);
 
 struct Argument {
-    word val;
+    word val; // номер регистра (не путать со значением из ќ«” w_read((struct Argument).adress)!)
     word adress;
 }; //объ€вим переменные ss и dd типа struct Argument
 
