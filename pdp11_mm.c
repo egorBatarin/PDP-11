@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include "foo.h" //создал свою библиотеку, чтоб не писать всякие тайпдефы и екстёрны каждый раз
-
+#include <string.h>
 byte mem[MEMSIZE]; //решил, что отдельными байтами проще
 
 void b_write(adr a, byte b) {
@@ -30,9 +30,9 @@ void w_write(adr a, word w) {
 }
 
 const Command cmd[] = {
-	{(word)1111000000000000,   (word)1000000000000, "mov",	do_mov}, // (1111)000000000000 & w = (1)000000000000,   w = (0001).. - в скобках последние 4 бита (01 в 8-ричной)
-	{(word)1111000000000000, (word)110000000000000, "add",	do_add}, // (1111)000000000000 & w = (110)000000000000, w = (0110).. - в скобках последние 4 бита (06 в 8-ричной)
-	{(word)1111000000000000,               (word)0, "halt",	do_halt} // (1111)000000000000 & w = (0000)000000000000,w = (0000).. - в скобках последние 4 бита (00 в 8-ричной)
+	{0170000, 0010000, "mov",	do_mov}, // (1111)000000000000 & w = (1)000000000000,   w = (0001).. - в скобках последние 4 бита (01 в 8-ричной)
+	{0170000, 0060000, "add",	do_add}, // (1111)000000000000 & w = (110)000000000000, w = (0110).. - в скобках последние 4 бита (06 в 8-ричной)
+	{0170000, 0000000, "halt",	do_halt} // (1111)000000000000 & w = (0000)000000000000,w = (0000).. - в скобках последние 4 бита (00 в 8-ричной)
 };
 
 struct Argument sixbittodata(word w) {
@@ -46,15 +46,21 @@ struct Argument sixbittodata(word w) {
 		case Rn0:
 			arg.adress = n; // адрес - номер регистра
 			arg.val = reg[n]; //значение - то, что лежит в регистре
+			trace (" [sixbittodata : R%06o] ", n);
 			break;
 		case Rn1:
 			arg.adress = reg[n]; //в регистре лежит адрес
 			arg.val = w_read(arg.adress); // читаем с этого адреса значение
+			trace (" [sixbittodata :(R%06o)] ", n);
 			break;
 		case Rn2:
 			arg.adress = reg[n];
 			arg.val = w_read(arg.adress);
             reg[n] += 2; //все то же самое, только инкрементируем значение в регистре
+            if (n == 7)
+				trace(" [sixbittodata :#%06o] ", arg.val);
+			else
+				trace(" [sixbittodata :(R%06o)+] ", n);
             break;
         case Rn3:
 			arg.adress = reg[n]; //в регистре лежит адрес
@@ -108,11 +114,22 @@ void load_file(const char * file_name) { //будем использовать только в этом файл
 	}
 	fclose(fin);
 };
-
+  char tracechecker;
 
 int main(int argc, char * argv[]) {
 
+    if (argv[2] != NULL) {
+        if(strcmp(argv[2],"-t") == 0)
+            tracechecker = 1;
+        else
+            tracechecker = 0;
+    }
+    else
+        tracechecker = 0;
+
+
     load_file(argv[1]); // в качестве argv[1] будет выступать какой-нибудь текстовый тест .txt написанный в командной строке первым через пробел
+    trace("--------Running---------\n");
     run();
     //test_mem(); // палочка-выручалочка (потом, если что, load_file перезапишет оперативу и регистры)
     return 0;

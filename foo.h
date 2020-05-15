@@ -21,7 +21,7 @@ typedef word adr;
 #define Rn7 7 // косвенно индексный
 
 extern byte mem[MEMSIZE];
-
+extern char tracechecker;
 void b_write(adr a, byte b);
 byte b_read(adr a);
 word w_read(adr a);
