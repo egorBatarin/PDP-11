@@ -1,6 +1,6 @@
-#ifndef FOO_H
+#ifndef FOOH
 
-#define FOO_H
+#define FOOH
 #include <stdarg.h>
 #include <assert.h> // средство для сохранения зрения и времени
 typedef unsigned char byte;
@@ -52,5 +52,4 @@ struct Argument {
 
 extern struct Argument ss, dd;
 struct Argument sixbittodata(word w);
-#endif FOO_H
-
+#endif

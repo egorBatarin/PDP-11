@@ -32,8 +32,16 @@ void test_mem() {
     printf("%x\n", b_read(512)); //c0
     printf("%x\n", b_read(513)); //15
     printf("%x\n", b_read(514)); //2
+    printf("%x\n", b_read(515)); //0
+    printf("%x\n", b_read(516)); //c1
+    printf("%x\n", b_read(517)); //15
+    printf("%x\n", b_read(518)); //03
+    printf("%x\n", b_read(519)); //0
+    printf("%x\n", b_read(520)); //01
+    printf("%x\n", b_read(521)); //60
+    printf("%x\n", b_read(522)); //00
+    printf("%x\n", b_read(523)); //00
 */
-
    //Тест 5: проверяем работоспособность функции load_file для 01_sum_mode1.pdp.txt
 /*
     printf("%x\n", b_read(64)); //5
@@ -59,6 +67,5 @@ void test_mem() {
     result = sixbittodata(wer);
     assert(result.adress == 1002);
     assert(result.val == 5);
-
 }
 
