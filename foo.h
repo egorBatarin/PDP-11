@@ -33,6 +33,9 @@ void do_halt();
 void do_add();
 void do_nothing();
 void run();
+void test_mem();
+
+
 typedef struct {
 	word mask;
 	word opcode;
@@ -48,6 +51,6 @@ struct Argument {
 }; //объ€вим переменные ss и dd типа struct Argument
 
 extern struct Argument ss, dd;
-
+struct Argument sixbittodata(word w);
 #endif FOO_H
 

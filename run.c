@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include <stdlib.h> // для функции exit
+#include <stdlib.h> // Г¤Г«Гї ГґГіГ­ГЄГ¶ГЁГЁ exit
 #include "foo.h"
 
 struct Argument ss, dd;
@@ -17,7 +17,7 @@ void do_mov() {
 
 void do_halt() {
 trace("R0 = %06o \n R1 = %06o \n R2 = %06o \n R3 = %06o \n R4 = %06o \n R5 = %06o \n R6 = %06o \n R7 = %06o \n" ,
-	reg[0], reg[1], reg[2], reg[3], reg[4], reg[5], reg[6], reg[7]); //выводим все регистры и стоп машина
+	reg[0], reg[1], reg[2], reg[3], reg[4], reg[5], reg[6], reg[7]); //ГўГ»ГўГ®Г¤ГЁГ¬ ГўГ±ГҐ Г°ГҐГЈГЁГ±ГІГ°Г» ГЁ Г±ГІГ®ГЇ Г¬Г ГёГЁГ­Г 
 	exit(0);
 };
 
