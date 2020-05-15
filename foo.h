@@ -1,6 +1,7 @@
 #ifndef FOO_H
 
 #define FOO_H
+#include <stdarg.h>
 
 typedef unsigned char byte;
 typedef unsigned short int word;
@@ -14,6 +15,7 @@ extern byte mem[MEMSIZE];
 void b_write(adr a, byte b);
 byte b_read(adr a);
 word w_read(adr a);
+word reg[8];
 void w_write(adr a, word w);
 void run();
 void do_mov();
