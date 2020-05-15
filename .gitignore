@@ -4,3 +4,4 @@ pdp11_mm.o
 01_sum_mode1.pdp.txt
 01_sum_neg.pdp.txt
 run.o
+out
