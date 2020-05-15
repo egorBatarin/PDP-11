@@ -2,26 +2,13 @@
 #include <stdlib.h> // для функции exit
 #include "foo.h"
 
+struct Argument ss, dd;
+
 void trace(const char *  format, ...) {
     va_list ap;
 	va_start(ap, format);
 	vprintf(format, ap);
 	va_end(ap);
-};
-
-void run() {
-    pc = 01000;
-    while(1) {
-        word w = w_read(pc);
-        trace("%06o %06o: ", pc, w);
-        pc += 2;
-        int i;
-        for(i = 0; i < 3; i++) {
-            if ((w & cmd[i].mask) == cmd[i].opcode ) {
-
-            }
-        }
-    }
 };
 
 void do_mov() {
@@ -38,6 +25,21 @@ void do_add() {
 
 };
 
-void do_nothing() {
 
+void run() {
+    pc = 01000;
+    while(1) {
+        word w = w_read(pc);
+        //trace("%06o %06o: ", pc, w);
+        pc += 2;
+        int i;
+        for(i = 0; i < 3; i++) {
+            if ((w & cmd[i].mask) == cmd[i].opcode) {
+
+            }
+        }
+    }
 };
+
+
+
